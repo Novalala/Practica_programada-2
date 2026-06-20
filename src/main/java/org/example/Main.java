@@ -1,10 +1,15 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import javax.swing.SwingUtilities;
+
+
 public class Main {
     public static void main(String[] args) {
-
-        new Calculadora();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Calculadora();
+            }
+        });
     }
 }

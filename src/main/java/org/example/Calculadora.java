@@ -1,10 +1,11 @@
 package org.example;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Calculadora extends JFrame{
+public class Calculadora extends JFrame {
     private JPanel mainPanel;
     private JButton signoDivision;
     private JButton numero1;
@@ -28,145 +29,95 @@ public class Calculadora extends JFrame{
     private String operador = "";
     private boolean nuevaEntrada = true;
 
-    public Calculadora(){
+    public Calculadora() {
+        initComponents();
+        initListeners();
 
         setContentPane(mainPanel);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setEnabled(true);
         setTitle("Calculadora");
-        setSize(300,300);
+        setSize(320, 420);
+        setLocationRelativeTo(null);
         setVisible(true);
+    }
 
-        numero0.addActionListener(new ActionListener() {
+    private void initComponents() {
+        mainPanel = new JPanel(new BorderLayout(8, 8));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        displayNumeros = new JLabel("0", SwingConstants.RIGHT);
+        displayNumeros.setFont(displayNumeros.getFont().deriveFont(Font.BOLD, 32f));
+        displayNumeros.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        mainPanel.add(displayNumeros, BorderLayout.NORTH);
+
+        JPanel buttonPanel = new JPanel(new GridLayout(4, 4, 8, 8));
+
+        numero7 = new JButton("7");
+        numero8 = new JButton("8");
+        numero9 = new JButton("9");
+        signoDivision = new JButton("/");
+
+        numero4 = new JButton("4");
+        numero5 = new JButton("5");
+        numero6 = new JButton("6");
+        signoMultiplicacion = new JButton("x");
+
+        numero1 = new JButton("1");
+        numero2 = new JButton("2");
+        numero3 = new JButton("3");
+        signoResta = new JButton("-");
+
+        numero0 = new JButton("0");
+        signoLimpiar = new JButton("C");
+        signoResultado = new JButton("=");
+        signoSuma = new JButton("+");
+
+        buttonPanel.add(numero7);
+        buttonPanel.add(numero8);
+        buttonPanel.add(numero9);
+        buttonPanel.add(signoDivision);
+        buttonPanel.add(numero4);
+        buttonPanel.add(numero5);
+        buttonPanel.add(numero6);
+        buttonPanel.add(signoMultiplicacion);
+        buttonPanel.add(numero1);
+        buttonPanel.add(numero2);
+        buttonPanel.add(numero3);
+        buttonPanel.add(signoResta);
+        buttonPanel.add(numero0);
+        buttonPanel.add(signoLimpiar);
+        buttonPanel.add(signoResultado);
+        buttonPanel.add(signoSuma);
+
+        mainPanel.add(buttonPanel, BorderLayout.CENTER);
+    }
+
+    private void initListeners() {
+        ActionListener digitListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String digito = "0";
-                if (nuevaEntrada) {
+                String digito = ((JButton) e.getSource()).getText();
+                if (nuevaEntrada || displayNumeros.getText().equals("0")) {
                     displayNumeros.setText(digito);
                     nuevaEntrada = false;
                 } else {
                     displayNumeros.setText(displayNumeros.getText() + digito);
                 }
             }
-        });
+        };
 
-        numero1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String digito = "1";
-                if (nuevaEntrada) {
-                    displayNumeros.setText(digito);
-                    nuevaEntrada = false;
-                } else {
-                    displayNumeros.setText(displayNumeros.getText() + digito);
-                }
-            }
-        });
-
-        numero2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String digito = "2";
-                if (nuevaEntrada) {
-                    displayNumeros.setText(digito);
-                    nuevaEntrada = false;
-                } else {
-                    displayNumeros.setText(displayNumeros.getText() + digito);
-                }
-            }
-        });
-
-        numero3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String digito = "3";
-                if (nuevaEntrada) {
-                    displayNumeros.setText(digito);
-                    nuevaEntrada = false;
-                } else {
-                    displayNumeros.setText(displayNumeros.getText() + digito);
-                }
-            }
-        });
-
-        numero4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String digito = "4";
-                if (nuevaEntrada) {
-                    displayNumeros.setText(digito);
-                    nuevaEntrada = false;
-                } else {
-                    displayNumeros.setText(displayNumeros.getText() + digito);
-                }
-            }
-        });
-
-        numero5.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String digito = "5";
-                if (nuevaEntrada) {
-                    displayNumeros.setText(digito);
-                    nuevaEntrada = false;
-                } else {
-                    displayNumeros.setText(displayNumeros.getText() + digito);
-                }
-            }
-        });
-
-        numero6.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String digito = "6";
-                if (nuevaEntrada) {
-                    displayNumeros.setText(digito);
-                    nuevaEntrada = false;
-                } else {
-                    displayNumeros.setText(displayNumeros.getText() + digito);
-                }
-            }
-        });
-
-        numero7.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String digito = "7";
-                if (nuevaEntrada) {
-                    displayNumeros.setText(digito);
-                    nuevaEntrada = false;
-                } else {
-                    displayNumeros.setText(displayNumeros.getText() + digito);
-                }
-            }
-        });
-
-        numero8.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String digito = "8";
-                if (nuevaEntrada) {
-                    displayNumeros.setText(digito);
-                    nuevaEntrada = false;
-                } else {
-                    displayNumeros.setText(displayNumeros.getText() + digito);
-                }
-            }
-        });
-
-        numero9.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String digito = "9";
-                if (nuevaEntrada) {
-                    displayNumeros.setText(digito);
-                    nuevaEntrada = false;
-                } else {
-                    displayNumeros.setText(displayNumeros.getText() + digito);
-                }
-            }
-        });
-
+        numero0.addActionListener(digitListener);
+        numero1.addActionListener(digitListener);
+        numero2.addActionListener(digitListener);
+        numero3.addActionListener(digitListener);
+        numero4.addActionListener(digitListener);
+        numero5.addActionListener(digitListener);
+        numero6.addActionListener(digitListener);
+        numero7.addActionListener(digitListener);
+        numero8.addActionListener(digitListener);
+        numero9.addActionListener(digitListener);
 
         signoSuma.addActionListener(new ActionListener() {
             @Override
@@ -212,9 +163,15 @@ public class Calculadora extends JFrame{
                     double resultado = 0;
 
                     switch (operador) {
-                        case "+": resultado = primerNumero + segundoNumero; break;
-                        case "-": resultado = primerNumero - segundoNumero; break;
-                        case "x": resultado = primerNumero * segundoNumero; break;
+                        case "+":
+                            resultado = primerNumero + segundoNumero;
+                            break;
+                        case "-":
+                            resultado = primerNumero - segundoNumero;
+                            break;
+                        case "x":
+                            resultado = primerNumero * segundoNumero;
+                            break;
                         case "/":
                             if (segundoNumero == 0) {
                                 displayNumeros.setText("Error: div/0");
@@ -222,9 +179,11 @@ public class Calculadora extends JFrame{
                             }
                             resultado = primerNumero / segundoNumero;
                             break;
+                        default:
+                            resultado = segundoNumero;
+                            break;
                     }
 
-                    // Muestra entero si no tiene decimales
                     if (resultado == (long) resultado) {
                         displayNumeros.setText(String.valueOf((long) resultado));
                     } else {
@@ -233,7 +192,6 @@ public class Calculadora extends JFrame{
 
                     primerNumero = resultado;
                     nuevaEntrada = true;
-
                 } catch (NumberFormatException ex) {
                     displayNumeros.setText("Error");
                 }
@@ -249,6 +207,5 @@ public class Calculadora extends JFrame{
                 nuevaEntrada = true;
             }
         });
-
     }
 }

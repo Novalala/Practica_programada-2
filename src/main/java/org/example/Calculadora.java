@@ -159,30 +159,8 @@ public class Calculadora extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    double segundoNumero = Double.parseDouble(displayNumeros.getText());
-                    double resultado = 0;
-
-                    switch (operador) {
-                        case "+":
-                            resultado = primerNumero + segundoNumero;
-                            break;
-                        case "-":
-                            resultado = primerNumero - segundoNumero;
-                            break;
-                        case "x":
-                            resultado = primerNumero * segundoNumero;
-                            break;
-                        case "/":
-                            if (segundoNumero == 0) {
-                                displayNumeros.setText("Error: div/0");
-                                return;
-                            }
-                            resultado = primerNumero / segundoNumero;
-                            break;
-                        default:
-                            resultado = segundoNumero;
-                            break;
-                    }
+                    double segundoNumero = obtenerValorActual();
+                    double resultado = calcularResultado(segundoNumero);
 
                     if (resultado == (long) resultado) {
                         displayNumeros.setText(String.valueOf((long) resultado));
@@ -192,8 +170,8 @@ public class Calculadora extends JFrame {
 
                     primerNumero = resultado;
                     nuevaEntrada = true;
-                } catch (NumberFormatException ex) {
-                    displayNumeros.setText("Error");
+                } catch (DivisionPorCeroException | EntradaInvalidaException ex) {
+                    displayNumeros.setText(ex.getMessage());
                 }
             }
         });
@@ -207,5 +185,31 @@ public class Calculadora extends JFrame {
                 nuevaEntrada = true;
             }
         });
+    }
+
+    private double obtenerValorActual() throws EntradaInvalidaException {
+        try {
+            return Double.parseDouble(displayNumeros.getText());
+        } catch (NumberFormatException ex) {
+            throw new EntradaInvalidaException();
+        }
+    }
+
+    private double calcularResultado(double segundoNumero) throws DivisionPorCeroException {
+        switch (operador) {
+            case "+":
+                return primerNumero + segundoNumero;
+            case "-":
+                return primerNumero - segundoNumero;
+            case "x":
+                return primerNumero * segundoNumero;
+            case "/":
+                if (segundoNumero == 0) {
+                    throw new DivisionPorCeroException();
+                }
+                return primerNumero / segundoNumero;
+            default:
+                return segundoNumero;
+        }
     }
 }
